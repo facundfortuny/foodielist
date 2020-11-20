@@ -3,7 +3,7 @@
     <v-row align="center" justify="center">
       <v-col cols="12" md="6" lg="6" xl="6">
         <v-img
-          :src="require('../assets/adventure.svg')"
+          src="../assets/adventure.svg"
           class="my-3"
           contain
           height="200"

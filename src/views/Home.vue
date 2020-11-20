@@ -6,7 +6,11 @@
           <v-list rounded>
             <v-subheader>RESTAURANTS</v-subheader>
             <v-list-item-group color="primary">
-              <v-list-item v-for="(item, i) in restaurants" :key="i">
+              <v-list-item
+                v-for="(item, i) in restaurants"
+                :key="i"
+                :to="{ name: 'Restaurant', params: { name: item.name } }"
+              >
                 <v-list-item-avatar>
                   <v-icon class="primary" dark>
                     mdi-silverware-fork-knife
@@ -37,17 +41,15 @@
 </template>
 
 <script lang="ts">
+import { Restaurant } from '@/models/restaurant';
 import Vue from 'vue';
 
 export default Vue.extend({
   name: 'Home',
   computed: {
-    restaurants() {
-      return this.$store.getters.allRest;
+    restaurants(): Restaurant[] {
+      return this.$store.state.restaurants;
     }
-  },
-  mounted() {
-    this.$store.dispatch('setRestaurants');
   }
 });
 </script>

@@ -1,9 +1,9 @@
 <template>
   <validation-observer ref="observer" v-slot="{ invalid }">
     <form @submit.prevent="submit">
-      <validation-provider v-slot="{ errors }" name="Name" rules="required">
+      <validation-provider v-slot="{ errors }" name="name" rules="required">
         <v-text-field
-          v-model="name"
+          v-model="rest.name"
           :error-messages="errors"
           label="Name"
           required
@@ -11,7 +11,7 @@
       </validation-provider>
       <validation-provider v-slot="{ errors }" name="type" rules="required">
         <v-text-field
-          v-model="type"
+          v-model="rest.type"
           :error-messages="errors"
           label="Type"
           required
@@ -19,7 +19,7 @@
       </validation-provider>
       <validation-provider v-slot="{ errors }" name="location" rules="required">
         <v-select
-          v-model="location"
+          v-model="rest.location"
           :items="locations"
           :error-messages="errors"
           label="Location"
@@ -29,7 +29,7 @@
       </validation-provider>
       <validation-provider v-slot="{ errors }" name="visited">
         <v-checkbox
-          v-model="visited"
+          v-model="rest.visited"
           :error-messages="errors"
           value="1"
           label="Visited"
@@ -43,7 +43,7 @@
         rules="max:140"
       >
         <v-text-field
-          v-model="description"
+          v-model="rest.description"
           :counter="140"
           :error-messages="errors"
           label="Description"
@@ -53,8 +53,8 @@
       <v-btn class="mr-4" type="submit" :disabled="invalid">
         Save
       </v-btn>
-      <v-btn @click="clear">
-        Clear
+      <v-btn @click="cancel">
+        Cancel
       </v-btn>
     </form>
   </validation-observer>
@@ -87,28 +87,36 @@ export default {
     ValidationObserver
   },
   name: 'AddRestaurant',
+  props: ['restaurant'],
   data: () => ({
-    name: '',
-    type: '',
-    location: null,
-    address: '',
-    description: '',
-    visited: false,
     locations: ['Barcelona', 'Menorca', 'Valencia', 'London']
   }),
+
+  computed: {
+    editMode() {
+      return !!this.restaurant.id;
+    },
+    rest() {
+      return this.restaurant;
+    }
+  },
 
   methods: {
     submit() {
       this.$refs.observer.validate();
+      if (this.editMode) {
+        this.$store.dispatch('updateRestaurant', this.rest).then(() => {
+          this.$router.push({ name: 'Home' });
+        });
+      } else {
+        this.$store.dispatch('saveRestaurant', this.rest).then(() => {
+          this.$router.push({ name: 'Home' });
+        });
+      }
     },
-    clear() {
-      this.name = '';
-      this.type = '';
-      this.location = null;
-      this.address = '';
-      this.description = '';
-      this.visited = false;
+    cancel() {
       this.$refs.observer.reset();
+      this.$router.push({ name: 'Home' });
     }
   }
 };
