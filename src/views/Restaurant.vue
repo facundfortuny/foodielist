@@ -2,7 +2,6 @@
   <v-container fluid>
     <v-row align="center" justify="center">
       <v-col cols="12" md="6" lg="6" xl="6">
-        {{ selectRest }}
         <AddRestaurant :restaurant="selectRest" />
       </v-col>
     </v-row>
