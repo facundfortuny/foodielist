@@ -17,3 +17,4 @@ export const db = firebase.initializeApp(firebaseConfig).firestore();
 export const auth = firebase.auth();
 
 export const restaurantsCollection = db.collection('restaurants');
+export const usersCollection = db.collection('users');

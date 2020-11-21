@@ -2,6 +2,7 @@ import { restaurantsCollection } from '@/db';
 import { Restaurant } from '@/models/restaurant';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import AuthModule from './modules/auth';
 
 Vue.use(Vuex);
 
@@ -46,6 +47,9 @@ const store = new Vuex.Store({
     getRest: state => (name: string) => {
       return state.restaurants.find((rest: Restaurant) => rest.name === name);
     }
+  },
+  modules: {
+    auth: AuthModule
   }
 });
 

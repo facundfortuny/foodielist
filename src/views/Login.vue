@@ -20,10 +20,12 @@
             <v-form>
               <v-text-field
                 label="Username"
+                v-model="loginForm.email"
                 prepend-icon="mdi-account-circle"
               />
               <v-text-field
                 :type="showPassword ? 'text' : 'password'"
+                v-model="loginForm.password"
                 label="Password"
                 prepend-icon="mdi-lock"
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -33,7 +35,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn block color="primary">Login</v-btn>
+            <v-btn @click="login()" block color="primary">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -46,8 +48,20 @@ export default {
   name: 'Login',
   data() {
     return {
-      showPassword: false
+      showPassword: false,
+      loginForm: {
+        email: '',
+        password: ''
+      }
     };
+  },
+  methods: {
+    login() {
+      this.$store.dispatch('auth/login', {
+        email: this.loginForm.email,
+        password: this.loginForm.password
+      });
+    }
   }
 };
 </script>

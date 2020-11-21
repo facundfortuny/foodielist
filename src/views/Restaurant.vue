@@ -2,6 +2,7 @@
   <v-container fluid>
     <v-row align="center" justify="center">
       <v-col cols="12" md="6" lg="6" xl="6">
+        {{ selectRest }}
         <AddRestaurant :restaurant="selectRest" />
       </v-col>
     </v-row>
@@ -24,20 +25,18 @@ export default Vue.extend({
   computed: {
     ...mapState(['restaurants']),
     selectRest(): Restaurant {
-      const emptyRest: Restaurant = {
-        name: '',
-        type: '',
-        location: '',
-        address: '',
-        description: '',
-        visited: false,
-        mapsLink: ''
-      };
-      if (this.name) {
-        const sel = this.$store.getters.getRest(this.name);
-        return sel ? sel : emptyRest;
-      }
-      return emptyRest;
+      const sel = this.$store.getters.getRest(this.name);
+      return sel
+        ? sel
+        : {
+            name: '',
+            type: '',
+            location: '',
+            address: '',
+            description: '',
+            visited: false,
+            mapsLink: ''
+          };
     }
   }
 });

@@ -17,33 +17,32 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn icon :to="{ name: 'RestaurantCreate' }">
-      <v-icon>mdi-plus</v-icon>
-    </v-btn>
+    <template v-if="user.name">
+      <v-btn icon :to="{ name: 'RestaurantCreate' }">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
 
-    <v-menu right bottom>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn icon v-bind="attrs" v-on="on">
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-      </template>
-
-      <v-list>
-        <v-list-item @click="() => {}">
-          <v-list-item-icon>
-            <v-icon>mdi-logout</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Logout</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+      <v-btn icon @click="logout()">
+        <v-icon>mdi-logout</v-icon>
+      </v-btn>
+    </template>
   </v-app-bar>
 </template>
 
 <script>
-export default {};
+import { mapState } from 'vuex';
+export default {
+  computed: {
+    ...mapState({
+      user: state => state.auth.userProfile
+    })
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('auth/logout');
+    }
+  }
+};
 </script>
 
 <style></style>

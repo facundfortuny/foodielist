@@ -3,7 +3,7 @@
     <form @submit.prevent="submit">
       <validation-provider v-slot="{ errors }" name="name" rules="required">
         <v-text-field
-          v-model="rest.name"
+          v-model="form.name"
           :error-messages="errors"
           label="Name"
           required
@@ -11,7 +11,7 @@
       </validation-provider>
       <validation-provider v-slot="{ errors }" name="type" rules="required">
         <v-text-field
-          v-model="rest.type"
+          v-model="form.type"
           :error-messages="errors"
           label="Type"
           required
@@ -19,7 +19,7 @@
       </validation-provider>
       <validation-provider v-slot="{ errors }" name="location" rules="required">
         <v-select
-          v-model="rest.location"
+          v-model="form.location"
           :items="locations"
           :error-messages="errors"
           label="Location"
@@ -29,7 +29,7 @@
       </validation-provider>
       <validation-provider v-slot="{ errors }" name="visited">
         <v-checkbox
-          v-model="rest.visited"
+          v-model="form.visited"
           :error-messages="errors"
           value="1"
           label="Visited"
@@ -43,7 +43,7 @@
         rules="max:140"
       >
         <v-text-field
-          v-model="rest.description"
+          v-model="form.description"
           :counter="140"
           :error-messages="errors"
           label="Description"
@@ -91,13 +91,12 @@ export default {
   data: () => ({
     locations: ['Barcelona', 'Menorca', 'Valencia', 'London']
   }),
-
   computed: {
     editMode() {
       return !!this.restaurant.id;
     },
-    rest() {
-      return this.restaurant;
+    form() {
+      return { ...this.restaurant };
     }
   },
 
@@ -105,11 +104,11 @@ export default {
     submit() {
       this.$refs.observer.validate();
       if (this.editMode) {
-        this.$store.dispatch('updateRestaurant', this.rest).then(() => {
+        this.$store.dispatch('updateRestaurant', this.form).then(() => {
           this.$router.push({ name: 'Home' });
         });
       } else {
-        this.$store.dispatch('saveRestaurant', this.rest).then(() => {
+        this.$store.dispatch('saveRestaurant', this.form).then(() => {
           this.$router.push({ name: 'Home' });
         });
       }
