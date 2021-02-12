@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import { required, max } from 'vee-validate/dist/rules';
 import {
   extend,
@@ -81,7 +82,7 @@ extend('max', {
   message: '{_field_} may not be greater than {length} characters'
 });
 
-export default {
+export default Vue.extend({
   components: {
     ValidationProvider,
     ValidationObserver
@@ -118,7 +119,7 @@ export default {
       this.$router.push({ name: 'Home' });
     }
   }
-};
+});
 </script>
 
 <style></style>

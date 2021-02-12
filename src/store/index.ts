@@ -46,6 +46,11 @@ const store = new Vuex.Store({
   getters: {
     getRest: state => (name: string) => {
       return state.restaurants.find((rest: Restaurant) => rest.name === name);
+    },
+    getRestByLoc: state => (location: string) => {
+      return state.restaurants.filter(
+        (restaurant: Restaurant) => restaurant.location === location
+      );
     }
   },
   modules: {
