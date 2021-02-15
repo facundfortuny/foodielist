@@ -63,6 +63,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Restaurant } from '@/models/restaurant';
+import { mapActions } from 'vuex';
 
 export default Vue.extend({
   name: 'Home',
@@ -77,7 +78,7 @@ export default Vue.extend({
   },
   computed: {
     restaurants(): Restaurant[] {
-      let filterRests = this.$store.state.restaurants;
+      let filterRests = this.$store.state.restaurants.restaurants;
 
       filterRests =
         this.selectedLoc !== ''
@@ -104,6 +105,12 @@ export default Vue.extend({
 
       return filterRests;
     }
+  },
+  methods: {
+    ...mapActions('restaurants', ['fetchRestaurants'])
+  },
+  async created() {
+    await this.fetchRestaurants();
   }
 });
 </script>

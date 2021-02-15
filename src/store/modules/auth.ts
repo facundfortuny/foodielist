@@ -1,4 +1,4 @@
-import { auth, usersCollection } from '@/db';
+import { auth } from '@/db';
 import router from '@/router/index';
 import { Module } from 'vuex';
 
@@ -6,40 +6,47 @@ const AuthModule: Module<any, any> = {
   namespaced: true,
 
   state: {
-    userProfile: {}
+    user: null
   },
 
-  getters: {},
+  getters: {
+    isAuth: state => () => {
+      return !!state.user;
+    }
+  },
 
   actions: {
-    async login({ dispatch }, form) {
+    async login(state, form) {
       const { user } = await auth.signInWithEmailAndPassword(
         form.email,
         form.password
       );
 
-      dispatch('fetchUserProfile', user);
-    },
-    async fetchUserProfile({ commit }, user) {
-      const userProfile = await usersCollection.doc(user.uid).get();
-
-      commit('setUserProfile', userProfile.data());
-
-      if (router.currentRoute.path === '/login') {
+      if (user) {
         router.push('/');
+      }
+    },
+    setUser({ commit }, user) {
+      if (user) {
+        commit('setUser', {
+          displayName: user.displayName,
+          email: user.email
+        });
+      } else {
+        commit('setUser', null);
       }
     },
     async logout({ commit }) {
       await auth.signOut();
-      commit('setUserProfile', {});
+      commit('setUser', {});
 
       router.push('/login');
     }
   },
 
   mutations: {
-    setUserProfile(state, val) {
-      state.userProfile = val;
+    setUser(state, val) {
+      state.user = val;
     }
   }
 };

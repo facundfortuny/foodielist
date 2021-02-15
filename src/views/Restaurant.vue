@@ -13,7 +13,7 @@ import AddRestaurant from '@/components/AddRestaurant.vue';
 import { Restaurant } from '@/models/restaurant';
 
 import Vue from 'vue';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default Vue.extend({
   name: 'Restaurant',
@@ -22,9 +22,9 @@ export default Vue.extend({
   },
   props: ['name'],
   computed: {
-    ...mapState(['restaurants']),
+    ...mapState('restaurants', ['restaurants']),
     selectRest(): Restaurant {
-      const sel = this.$store.getters.getRest(this.name);
+      const sel = this.$store.getters['restaurants/getRest'](this.name);
       return sel
         ? sel
         : {
@@ -37,6 +37,12 @@ export default Vue.extend({
             mapsLink: ''
           };
     }
+  },
+  methods: {
+    ...mapActions('restaurants', ['fetchRestaurants'])
+  },
+  async created() {
+    await this.fetchRestaurants();
   }
 });
 </script>

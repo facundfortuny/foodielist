@@ -17,7 +17,7 @@
 
     <v-spacer></v-spacer>
 
-    <template v-if="user.name">
+    <template v-if="isAuth">
       <v-btn icon :to="{ name: 'RestaurantCreate' }">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -30,12 +30,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 export default {
   computed: {
-    ...mapState({
-      user: state => state.auth.userProfile
-    })
+    ...mapGetters('auth', ['isAuth'])
   },
   methods: {
     logout() {

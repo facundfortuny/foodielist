@@ -9,6 +9,7 @@
           required
         ></v-text-field>
       </validation-provider>
+
       <validation-provider v-slot="{ errors }" name="type" rules="required">
         <v-text-field
           v-model="form.type"
@@ -17,6 +18,7 @@
           required
         ></v-text-field>
       </validation-provider>
+
       <validation-provider v-slot="{ errors }" name="location" rules="required">
         <v-select
           v-model="form.location"
@@ -27,14 +29,23 @@
           required
         ></v-select>
       </validation-provider>
-      <validation-provider v-slot="{ errors }" name="visited">
-        <v-checkbox
-          v-model="form.visited"
+
+      <validation-provider v-slot="{ errors }" name="address" rules="max:140">
+        <v-text-field
+          v-model="form.address"
+          :counter="140"
           :error-messages="errors"
-          value="1"
-          label="Visited"
-          type="visited"
-        ></v-checkbox>
+          label="Address"
+        ></v-text-field>
+      </validation-provider>
+
+      <validation-provider v-slot="{ errors }" name="mapsLink" rules="max:140">
+        <v-text-field
+          v-model="form.mapsLink"
+          :counter="140"
+          :error-messages="errors"
+          label="GMap Link"
+        ></v-text-field>
       </validation-provider>
 
       <validation-provider
@@ -48,6 +59,16 @@
           :error-messages="errors"
           label="Description"
         ></v-text-field>
+      </validation-provider>
+
+      <validation-provider v-slot="{ errors }" name="visited">
+        <v-checkbox
+          v-model="form.visited"
+          :error-messages="errors"
+          value="1"
+          label="Visited"
+          type="visited"
+        ></v-checkbox>
       </validation-provider>
 
       <v-btn class="mr-4" type="submit" :disabled="invalid">
@@ -105,13 +126,17 @@ export default Vue.extend({
     submit() {
       this.$refs.observer.validate();
       if (this.editMode) {
-        this.$store.dispatch('updateRestaurant', this.form).then(() => {
-          this.$router.push({ name: 'Home' });
-        });
+        this.$store
+          .dispatch('restaurants/updateRestaurant', this.form)
+          .then(() => {
+            this.$router.push({ name: 'Home' });
+          });
       } else {
-        this.$store.dispatch('saveRestaurant', this.form).then(() => {
-          this.$router.push({ name: 'Home' });
-        });
+        this.$store
+          .dispatch('restaurants/saveRestaurant', this.form)
+          .then(() => {
+            this.$router.push({ name: 'Home' });
+          });
       }
     },
     cancel() {

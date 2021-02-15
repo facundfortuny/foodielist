@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import store from '@/store';
 
 // firebase init
 const firebaseConfig = {
@@ -16,5 +17,8 @@ const firebaseConfig = {
 export const db = firebase.initializeApp(firebaseConfig).firestore();
 export const auth = firebase.auth();
 
+auth.onAuthStateChanged(user => {
+  store.dispatch('auth/setUser', user);
+});
+
 export const restaurantsCollection = db.collection('restaurants');
-export const usersCollection = db.collection('users');

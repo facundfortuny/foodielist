@@ -1,7 +1,6 @@
-import { auth } from '@/db';
-import store from '@/store';
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
+import store from '@/store';
 import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
@@ -55,8 +54,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
-
-  if (requiresAuth && !auth.currentUser) {
+  const isAuth = store.getters['auth/isAuth'];
+  if (requiresAuth && !isAuth) {
     next('/login');
   } else {
     next();
