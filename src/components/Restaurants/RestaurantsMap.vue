@@ -3,7 +3,7 @@
     v-if="!loading"
     :options="mapConfig"
     :center="mapCenter"
-    style="width: 470px; height: 300px"
+    class="gmap"
   >
     <gmap-marker
       v-for="marker in restaurants"
@@ -80,3 +80,18 @@ export default Vue.extend({
   }
 });
 </script>
+
+style="width: ; height: 500px"
+<style lang="scss" scoped>
+.gmap {
+  width: 470px;
+  height: 400px;
+}
+
+@media screen and (max-width: 400px) {
+  .gmap {
+    width: 300px;
+    height: 500px;
+  }
+}
+</style>
