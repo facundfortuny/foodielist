@@ -65,7 +65,7 @@ export default Vue.extend({
       selectedLoc: 'Valencia',
       locations: ['', 'Valencia', 'Barcelona', 'Menorca', 'London'],
       type: '',
-      menu: 'list'
+      menu: 'map'
     };
   },
   computed: {
