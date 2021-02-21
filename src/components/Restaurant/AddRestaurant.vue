@@ -1,5 +1,7 @@
 <template>
   <validation-observer ref="observer" v-slot="{ invalid }">
+    <FindRestaurant @restaurant="updateRestaurant" />
+    <v-divider />
     <form @submit.prevent="submit">
       <validation-provider v-slot="{ errors }" name="name" rules="required">
         <v-text-field
@@ -30,7 +32,7 @@
         ></v-select>
       </validation-provider>
 
-      <validation-provider v-slot="{ errors }" name="address" rules="max:140">
+      <validation-provider v-slot="{ errors }" name="address" rules="max:240">
         <v-text-field
           v-model="form.address"
           :counter="140"
@@ -39,10 +41,14 @@
         ></v-text-field>
       </validation-provider>
 
-      <validation-provider v-slot="{ errors }" name="mapsLink" rules="max:140">
+      <validation-provider name="website">
+        <v-text-field v-model="form.website" label="Website"></v-text-field>
+      </validation-provider>
+
+      <validation-provider v-slot="{ errors }" name="mapsLink" rules="max:400">
         <v-text-field
           v-model="form.mapsLink"
-          :counter="140"
+          :counter="240"
           :error-messages="errors"
           label="GMap Link"
         ></v-text-field>
@@ -55,7 +61,7 @@
       >
         <v-text-field
           v-model="form.description"
-          :counter="140"
+          :counter="400"
           :error-messages="errors"
           label="Description"
         ></v-text-field>
@@ -90,6 +96,9 @@ import {
   ValidationProvider,
   setInteractionMode
 } from 'vee-validate';
+import firebase from 'firebase/app';
+
+import FindRestaurant from '@/components/Restaurant/FindRestaurant.vue';
 
 setInteractionMode('eager');
 
@@ -106,22 +115,23 @@ extend('max', {
 export default Vue.extend({
   components: {
     ValidationProvider,
-    ValidationObserver
+    ValidationObserver,
+    FindRestaurant
   },
   name: 'AddRestaurant',
   props: ['restaurant'],
   data: () => ({
-    locations: ['Barcelona', 'Menorca', 'Valencia', 'London']
+    locations: ['Barcelona', 'Menorca', 'Valencia', 'London'],
+    form: {}
   }),
   computed: {
     editMode() {
       return !!this.restaurant.id;
-    },
-    form() {
-      return { ...this.restaurant };
     }
   },
-
+  created() {
+    this.form = { ...this.restaurant };
+  },
   methods: {
     submit() {
       this.$refs.observer.validate();
@@ -142,6 +152,16 @@ export default Vue.extend({
     cancel() {
       this.$refs.observer.reset();
       this.$router.push({ name: 'Home' });
+    },
+    updateRestaurant(rest) {
+      this.form.name = rest.name;
+      this.form.address = rest.address;
+      this.form.mapsLink = rest.mapsLink;
+      this.form.website = rest.website;
+      this.form.position = new firebase.firestore.GeoPoint(
+        rest.position.lat,
+        rest.position.lng
+      );
     }
   }
 });

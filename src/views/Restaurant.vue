@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import AddRestaurant from '@/components/AddRestaurant.vue';
+import AddRestaurant from '@/components/Restaurant/AddRestaurant.vue';
 import { Restaurant } from '@/models/restaurant';
 
 import Vue from 'vue';

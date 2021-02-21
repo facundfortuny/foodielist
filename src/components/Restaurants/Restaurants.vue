@@ -18,54 +18,54 @@
         ></v-checkbox>
         <v-divider></v-divider>
       </v-form>
+      <v-row align="center" justify="center">
+        <v-btn-toggle
+          tile
+          group
+          v-model="menu"
+          mandatory
+          cols="6"
+          md="6"
+          lg="6"
+          xl="6"
+        >
+          <v-btn x-large align-center :value="'map'">
+            <v-icon>mdi-map-marker-outline</v-icon>
+          </v-btn>
+          <v-btn x-large align-center :value="'list'">
+            <v-icon>mdi-format-list-checks</v-icon>
+          </v-btn>
+        </v-btn-toggle>
+      </v-row>
     </v-card-text>
     <v-card-text>
-      <v-list rounded>
-        <v-list-item-group color="primary">
-          <v-list-item
-            v-for="(item, i) in restaurants"
-            :key="i"
-            :to="{ name: 'Restaurant', params: { name: item.name } }"
-          >
-            <v-list-item-avatar>
-              <v-icon class="primary" dark>
-                mdi-silverware-fork-knife
-              </v-icon>
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.name"></v-list-item-title>
-              <v-list-item-subtitle v-text="item.type"></v-list-item-subtitle>
-              <v-list-item-subtitle
-                class="font-italic"
-                v-text="item.location"
-              ></v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-avatar v-if="item.visited">
-              <v-icon class="info" dark>
-                mdi-checkbox-marked-circle
-              </v-icon>
-            </v-list-item-avatar>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
+      <RestaurantsList v-if="menu === 'list'" :restaurants="restaurants" />
+      <RestaurantsMap v-if="menu === 'map'" :restaurants="restaurants" />
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { Restaurant } from '@/models/restaurant';
 import { mapActions } from 'vuex';
+import { Restaurant } from '@/models/restaurant';
+import RestaurantsList from '@/components/Restaurants/RestaurantsList.vue';
+import RestaurantsMap from '@/components/Restaurants/RestaurantsMap.vue';
 
 export default Vue.extend({
   name: 'Restaurants',
+  components: {
+    RestaurantsList,
+    RestaurantsMap
+  },
   data() {
     return {
       name: '',
       excludeVisited: false,
       selectedLoc: 'Valencia',
       locations: ['', 'Valencia', 'Barcelona', 'Menorca', 'London'],
-      type: ''
+      type: '',
+      menu: 'list'
     };
   },
   computed: {

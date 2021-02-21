@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Restaurants from '@/components/Restaurants.vue';
+import Restaurants from '@/components/Restaurants/Restaurants.vue';
 
 export default Vue.extend({
   components: { Restaurants },

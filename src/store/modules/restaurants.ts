@@ -30,7 +30,9 @@ const RestaurantsModule: Module<any, any> = {
         location: restaurant.location,
         description: restaurant.description,
         visited: restaurant.visited,
-        mapsLink: restaurant.mapsLink
+        mapsLink: restaurant.mapsLink,
+        position: restaurant.position,
+        website: restaurant.website
       });
     },
     async updateRestaurant(state, restaurant) {
@@ -42,7 +44,9 @@ const RestaurantsModule: Module<any, any> = {
         location: restaurant.location,
         description: restaurant.description,
         visited: restaurant.visited,
-        mapsLink: restaurant.mapsLink
+        mapsLink: restaurant.mapsLink,
+        position: restaurant.position,
+        website: restaurant.website
       });
     },
     async fetchRestaurants({ commit }) {
@@ -58,7 +62,9 @@ const RestaurantsModule: Module<any, any> = {
             location: res.location,
             description: res.description,
             visited: res.visited,
-            mapsLink: res.mapsLink
+            mapsLink: res.mapsLink,
+            position: res.position,
+            website: res.website
           });
         });
         commit('setRest', restaurants);

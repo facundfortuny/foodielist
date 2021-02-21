@@ -1,3 +1,4 @@
+import { Location } from '@/models/GMapOptions';
 export interface Restaurant {
   id?: string;
   name: string;
@@ -7,4 +8,6 @@ export interface Restaurant {
   description: string;
   visited: boolean;
   mapsLink: string;
+  position: Location;
+  website: string;
 }
