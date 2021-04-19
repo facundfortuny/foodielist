@@ -106,7 +106,7 @@ export default Vue.extend({
       }
     },
     getInfoContent(marker: Restaurant) {
-      return `<h3>${marker.name}</h3>`;
+      return `<h3 style="padding: 5px;">${marker.name}</h3>`;
     },
     openPage(marker: Restaurant) {
       this.$router.push({ name: 'Restaurant', params: { name: marker.name } });
