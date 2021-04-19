@@ -5,21 +5,33 @@
     :center="mapCenter"
     class="gmap"
   >
-    <gmap-marker
-      v-for="marker in restaurants"
-      :key="marker.name"
-      :position="getLocation(marker.position)"
-      :clickable="true"
-      :draggable="false"
-      :shape="shape"
-      @click="openInfo(marker)"
-    ></gmap-marker>
+    <template v-if="restaurants.length > 0">
+      <gmap-marker
+        :key="marker.name"
+        v-for="(marker, index) in restaurants"
+        :position="getLocation(marker.position)"
+        :clickable="true"
+        :draggable="false"
+        :shape="shape"
+        @click="openInfo(marker, index)"
+        @dblclick="openPage(marker)"
+      ></gmap-marker>
+      <gmap-info-window
+        :options="infoOptions"
+        :position="infoPosition"
+        :opened="infoOpen"
+        @closeclick="infoOpen = false"
+      >
+        <div v-html="infoContent"></div>
+      </gmap-info-window>
+    </template>
   </GmapMap>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { GMapOptions } from '@/models/GMapOptions';
+import { Restaurant } from '@/models/restaurant';
 import { gmapApi } from 'gmap-vue';
 
 export default Vue.extend({
@@ -28,8 +40,8 @@ export default Vue.extend({
   data() {
     return {
       mapCenter: {
-        lat: 39.462426,
-        lng: -0.376303,
+        lat: 39.47002481761118,
+        lng: -0.37721269017276177,
       },
       loading: false,
       description: '',
@@ -41,6 +53,19 @@ export default Vue.extend({
         coords: [10, 10, 10, 15, 15, 15, 15, 10],
         type: 'poly',
       },
+      infoContent: '',
+      infoPosition: {
+        lat: 39.462426,
+        lng: -0.376303,
+      },
+      infoOpen: false,
+      currentInfo: -1,
+      infoOptions: {
+        pixelOffset: {
+          width: 0,
+          height: -35,
+        },
+      },
     };
   },
   computed: {
@@ -49,12 +74,13 @@ export default Vue.extend({
       return {
         zoomControl: true,
         mapTypeControl: false,
-        scaleControl: false,
+        scaleControl: true,
         streetViewControl: false,
-        rotateControl: false,
+        rotateControl: true,
         fullscreenControl: true,
-        disableDefaultUi: false,
+        disableDefaultUi: true,
         zoom: 14,
+        clickableIcons: false,
       };
     },
   },
@@ -65,23 +91,54 @@ export default Vue.extend({
         this.mapCenter.lng = position.coords.longitude;
       });
     },
-    openInfo(marker: any) {
+    openInfo(marker: Restaurant, idx: number) {
+      this.infoPosition = {
+        lat: marker.position.latitude,
+        lng: marker.position.longitude,
+      };
+      this.infoContent = this.getInfoContent(marker);
+
+      if (this.currentInfo == idx) {
+        this.infoOpen = !this.infoOpen;
+      } else {
+        this.infoOpen = true;
+        this.currentInfo = idx;
+      }
+    },
+    getInfoContent(marker: Restaurant) {
+      return `<h3>${marker.name}</h3>`;
+    },
+    openPage(marker: Restaurant) {
       this.$router.push({ name: 'Restaurant', params: { name: marker.name } });
     },
-    getLocation(position: any) {
+    getLocation(position: { latitude: string; longitude: string }) {
       return {
         lat: position.latitude,
         lng: position.longitude,
       };
     },
   },
-  async created() {
-    this.setLocation();
+  watch: {
+    restaurants: {
+      handler: function (restaurants) {
+        if (restaurants.length === 1) {
+          const rest = this.restaurants[0];
+          this.mapCenter = {
+            lat: rest.position.latitude,
+            lng: rest.position.longitude,
+          };
+          this.marker = rest;
+        } else {
+          this.setLocation();
+        }
+      },
+      deep: true,
+      immediate: true,
+    },
   },
 });
 </script>
 
-style="width: ; height: 500px"
 <style lang="scss" scoped>
 .gmap {
   width: 470px;

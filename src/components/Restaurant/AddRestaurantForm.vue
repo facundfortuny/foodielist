@@ -147,7 +147,7 @@ export default Vue.extend({
     },
     cancel() {
       this.$refs.observer.reset();
-      this.$router.push({ name: 'Home' });
+      this.$emit('cancel');
     },
     updateRestaurant(rest) {
       this.form.name = rest.name;

@@ -22,7 +22,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/restaurant/create',
     name: 'RestaurantCreate',
-    component: () => import('@/views/Restaurant.vue'),
+    component: () => import('@/views/AddRestaurant.vue'),
     meta: {
       requiresAuth: true,
     },

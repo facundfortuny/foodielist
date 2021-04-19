@@ -7,9 +7,12 @@ export interface GMapOptions {
   fullscreenControl: boolean;
   disableDefaultUi: boolean;
   zoom: number;
+  clickableIcons: boolean;
 }
 
 export interface Location {
-  lat: number;
-  lng: number;
+  _lat: number;
+  _lng: number;
+  latitude: number;
+  longitude: number;
 }

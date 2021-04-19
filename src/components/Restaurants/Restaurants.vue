@@ -19,23 +19,25 @@
         <v-divider></v-divider>
       </v-form>
       <v-row align="center" justify="center">
-        <v-btn-toggle
-          tile
-          group
-          v-model="menu"
-          mandatory
-          cols="6"
-          md="6"
-          lg="6"
-          xl="6"
-        >
-          <v-btn x-large align-center :value="'map'">
-            <v-icon>mdi-map-marker-outline</v-icon>
-          </v-btn>
-          <v-btn x-large align-center :value="'list'">
-            <v-icon>mdi-format-list-checks</v-icon>
-          </v-btn>
-        </v-btn-toggle>
+        <v-col class="text-center">
+          <v-btn-toggle
+            tile
+            group
+            v-model="menu"
+            mandatory
+            cols="6"
+            md="6"
+            lg="6"
+            xl="6"
+          >
+            <v-btn x-large align-center :value="'map'">
+              <v-icon>mdi-map-marker-outline</v-icon>
+            </v-btn>
+            <v-btn x-large align-center :value="'list'">
+              <v-icon>mdi-format-list-checks</v-icon>
+            </v-btn>
+          </v-btn-toggle>
+        </v-col>
       </v-row>
     </v-card-text>
     <v-card-text>

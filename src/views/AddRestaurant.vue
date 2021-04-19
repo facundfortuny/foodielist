@@ -2,19 +2,7 @@
   <v-container fluid>
     <v-row align="center" justify="center" v-if="editMode">
       <v-col cols="12" md="6" lg="6" xl="6">
-        <AddRestaurantForm
-          :restaurant="selectRest"
-          @cancel="editMode = !editMode"
-        />
-      </v-col>
-    </v-row>
-    <v-row align="center" justify="center" v-else>
-      <v-col cols="12" md="6" lg="6" xl="6">
-        <RestaurantComponent
-          v-if="selectRest.name"
-          :restaurant="selectRest"
-          @editMode="editMode = !editMode"
-        />
+        <AddRestaurantForm :restaurant="selectRest" @cancel="cancel" />
       </v-col>
     </v-row>
   </v-container>
@@ -22,7 +10,6 @@
 
 <script lang="ts">
 import AddRestaurantForm from '@/components/Restaurant/AddRestaurantForm.vue';
-import RestaurantComponent from '@/components/Restaurant/RestaurantComponent.vue';
 import { Restaurant } from '@/models/restaurant';
 
 import Vue from 'vue';
@@ -32,12 +19,11 @@ export default Vue.extend({
   name: 'Restaurant',
   components: {
     AddRestaurantForm,
-    RestaurantComponent,
   },
   props: ['name'],
   data() {
     return {
-      editMode: false,
+      editMode: true,
     };
   },
   computed: {
@@ -59,6 +45,9 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions('restaurants', ['fetchRestaurants']),
+    cancel() {
+      this.$router.push({ name: 'Home' });
+    },
   },
   async created() {
     await this.fetchRestaurants();
