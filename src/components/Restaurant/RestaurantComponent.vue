@@ -1,8 +1,13 @@
 <template>
   <v-card class="mx-auto" max-width="500" tile>
-    <v-card-title>{{ restaurant.name }}</v-card-title>
+    <v-card-title>
+      {{ restaurant.name }}
+    </v-card-title>
 
     <v-card-text>
+      <v-avatar color="info" v-if="restaurant.visited">
+        <v-icon dark> mdi-checkbox-marked-circle </v-icon>
+      </v-avatar>
       <div class="my-4 subtitle-1">
         {{ restaurant.type }}
       </div>
