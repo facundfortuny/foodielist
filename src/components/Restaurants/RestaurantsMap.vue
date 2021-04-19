@@ -148,7 +148,7 @@ export default Vue.extend({
 @media screen and (max-width: 400px) {
   .gmap {
     width: 300px;
-    height: 500px;
+    height: 400px;
   }
 }
 </style>
