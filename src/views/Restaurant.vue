@@ -18,7 +18,7 @@ import { mapActions, mapState } from 'vuex';
 export default Vue.extend({
   name: 'Restaurant',
   components: {
-    AddRestaurant
+    AddRestaurant,
   },
   props: ['name'],
   computed: {
@@ -34,15 +34,15 @@ export default Vue.extend({
             address: '',
             description: '',
             visited: false,
-            mapsLink: ''
+            mapsLink: '',
           };
-    }
+    },
   },
   methods: {
-    ...mapActions('restaurants', ['fetchRestaurants'])
+    ...mapActions('restaurants', ['fetchRestaurants']),
   },
   async created() {
     await this.fetchRestaurants();
-  }
+  },
 });
 </script>

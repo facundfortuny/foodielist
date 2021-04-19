@@ -51,17 +51,17 @@ export default {
       showPassword: false,
       loginForm: {
         email: '',
-        password: ''
-      }
+        password: '',
+      },
     };
   },
   methods: {
     login() {
       this.$store.dispatch('auth/login', {
         email: this.loginForm.email,
-        password: this.loginForm.password
+        password: this.loginForm.password,
       });
-    }
-  }
+    },
+  },
 };
 </script>

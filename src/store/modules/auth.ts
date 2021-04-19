@@ -6,13 +6,13 @@ const AuthModule: Module<any, any> = {
   namespaced: true,
 
   state: {
-    user: null
+    user: null,
   },
 
   getters: {
-    isAuth: state => () => {
+    isAuth: (state) => () => {
       return !!state.user;
-    }
+    },
   },
 
   actions: {
@@ -30,7 +30,7 @@ const AuthModule: Module<any, any> = {
       if (user) {
         commit('setUser', {
           displayName: user.displayName,
-          email: user.email
+          email: user.email,
         });
       } else {
         commit('setUser', null);
@@ -41,14 +41,14 @@ const AuthModule: Module<any, any> = {
       commit('setUser', {});
 
       router.push('/login');
-    }
+    },
   },
 
   mutations: {
     setUser(state, val) {
       state.user = val;
-    }
-  }
+    },
+  },
 };
 
 export default AuthModule;

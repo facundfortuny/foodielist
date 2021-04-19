@@ -7,9 +7,7 @@
         :to="{ name: 'Restaurant', params: { name: item.name } }"
       >
         <v-list-item-avatar>
-          <v-icon class="primary" dark>
-            mdi-silverware-fork-knife
-          </v-icon>
+          <v-icon class="primary" dark> mdi-silverware-fork-knife </v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title v-text="item.name"></v-list-item-title>
@@ -20,9 +18,7 @@
           ></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-avatar v-if="item.visited">
-          <v-icon class="info" dark>
-            mdi-checkbox-marked-circle
-          </v-icon>
+          <v-icon class="info" dark> mdi-checkbox-marked-circle </v-icon>
         </v-list-item-avatar>
       </v-list-item>
     </v-list-item-group>
@@ -34,6 +30,6 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'RestaurantsList',
-  props: ['restaurants']
+  props: ['restaurants'],
 });
 </script>

@@ -14,6 +14,6 @@ import Restaurants from '@/components/Restaurants/Restaurants.vue';
 
 export default Vue.extend({
   components: { Restaurants },
-  name: 'Home'
+  name: 'Home',
 });
 </script>

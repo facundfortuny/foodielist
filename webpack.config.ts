@@ -7,8 +7,8 @@ export const module = {
   rules: [
     {
       test: /\.vue$/,
-      use: 'vue-loader'
-    }
-  ]
+      use: 'vue-loader',
+    },
+  ],
 };
 export const plugins = [new VueLoaderPlugin()];

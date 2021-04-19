@@ -33,13 +33,13 @@
 import { mapGetters } from 'vuex';
 export default {
   computed: {
-    ...mapGetters('auth', ['isAuth'])
+    ...mapGetters('auth', ['isAuth']),
   },
   methods: {
     logout() {
       this.$store.dispatch('auth/logout');
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -6,18 +6,18 @@ const RestaurantsModule: Module<any, any> = {
   namespaced: true,
 
   state: {
-    restaurants: []
+    restaurants: [],
   },
 
   getters: {
-    getRest: state => (name: string) => {
+    getRest: (state) => (name: string) => {
       return state.restaurants.find((rest: Restaurant) => rest.name === name);
     },
-    getRestByLoc: state => (location: string) => {
+    getRestByLoc: (state) => (location: string) => {
       return state.restaurants.filter(
         (restaurant: Restaurant) => restaurant.location === location
       );
-    }
+    },
   },
 
   actions: {
@@ -32,7 +32,7 @@ const RestaurantsModule: Module<any, any> = {
         visited: restaurant.visited,
         mapsLink: restaurant.mapsLink,
         position: restaurant.position,
-        website: restaurant.website
+        website: restaurant.website,
       });
     },
     async updateRestaurant(state, restaurant) {
@@ -46,13 +46,13 @@ const RestaurantsModule: Module<any, any> = {
         visited: restaurant.visited,
         mapsLink: restaurant.mapsLink,
         position: restaurant.position,
-        website: restaurant.website
+        website: restaurant.website,
       });
     },
     async fetchRestaurants({ commit }) {
-      restaurantsCollection.orderBy('name', 'asc').onSnapshot(snapshot => {
+      restaurantsCollection.orderBy('name', 'asc').onSnapshot((snapshot) => {
         const restaurants: Restaurant[] = [];
-        snapshot.forEach(doc => {
+        snapshot.forEach((doc) => {
           const res = doc.data();
           restaurants.push({
             id: doc.id,
@@ -64,18 +64,18 @@ const RestaurantsModule: Module<any, any> = {
             visited: res.visited,
             mapsLink: res.mapsLink,
             position: res.position,
-            website: res.website
+            website: res.website,
           });
         });
         commit('setRest', restaurants);
       });
-    }
+    },
   },
   mutations: {
     setRest: (state, restaurants) => {
       state.restaurants = [...restaurants];
-    }
-  }
+    },
+  },
 };
 
 export default RestaurantsModule;

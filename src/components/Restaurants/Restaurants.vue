@@ -56,7 +56,7 @@ export default Vue.extend({
   name: 'Restaurants',
   components: {
     RestaurantsList,
-    RestaurantsMap
+    RestaurantsMap,
   },
   data() {
     return {
@@ -65,7 +65,7 @@ export default Vue.extend({
       selectedLoc: 'Valencia',
       locations: ['', 'Valencia', 'Barcelona', 'Menorca', 'London'],
       type: '',
-      menu: 'map'
+      menu: 'map',
     };
   },
   computed: {
@@ -96,13 +96,13 @@ export default Vue.extend({
         : filterRests;
 
       return filterRests;
-    }
+    },
   },
   methods: {
-    ...mapActions('restaurants', ['fetchRestaurants'])
+    ...mapActions('restaurants', ['fetchRestaurants']),
   },
   async created() {
     await this.fetchRestaurants();
-  }
+  },
 });
 </script>

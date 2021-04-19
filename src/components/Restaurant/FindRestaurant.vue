@@ -23,7 +23,7 @@ export default Vue.extend({
   name: 'FindRestaurant',
   data() {
     return {
-      restaurant: {}
+      restaurant: {},
     };
   },
   methods: {
@@ -32,17 +32,17 @@ export default Vue.extend({
 
       const position = {
         lat: place.geometry.location.lat(),
-        lng: place.geometry.location.lng()
+        lng: place.geometry.location.lng(),
       };
       this.restaurant = {
         name: place.name,
         position: position,
         mapsLink: place.url,
         address: place.formatted_address,
-        website: place.website ? place.website : ''
+        website: place.website ? place.website : '',
       };
       this.$emit('restaurant', this.restaurant);
-    }
-  }
+    },
+  },
 });
 </script>

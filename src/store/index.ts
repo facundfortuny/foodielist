@@ -9,8 +9,8 @@ const store = new Vuex.Store({
   state: {},
   modules: {
     auth: AuthModule,
-    restaurants: RestaurantsModule
-  }
+    restaurants: RestaurantsModule,
+  },
 });
 
 export default store;

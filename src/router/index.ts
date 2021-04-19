@@ -11,21 +11,21 @@ const routes: Array<RouteConfig> = [
     name: 'Home',
     component: Home,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/Login.vue'),
   },
   {
     path: '/restaurant/create',
     name: 'RestaurantCreate',
     component: () => import('@/views/Restaurant.vue'),
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: '/restaurant/:name',
@@ -33,8 +33,8 @@ const routes: Array<RouteConfig> = [
     props: true,
     component: () => import('@/views/Restaurant.vue'),
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: '/logout',
@@ -42,18 +42,18 @@ const routes: Array<RouteConfig> = [
     meta: { requiresAuth: true },
     beforeEnter(to, from, next) {
       store.dispatch('auth/logout').then(() => next({ name: 'Login' }));
-    }
-  }
+    },
+  },
 ];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
+  const requiresAuth = to.matched.some((x) => x.meta.requiresAuth);
   const isAuth = store.getters['auth/isAuth'];
   if (requiresAuth && !isAuth) {
     next('/login');

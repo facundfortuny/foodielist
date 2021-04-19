@@ -29,18 +29,18 @@ export default Vue.extend({
     return {
       mapCenter: {
         lat: 39.462426,
-        lng: -0.376303
+        lng: -0.376303,
       },
       loading: false,
       description: '',
       marker: {
         name: '',
-        location: {}
+        location: {},
       },
       shape: {
         coords: [10, 10, 10, 15, 15, 15, 15, 10],
-        type: 'poly'
-      }
+        type: 'poly',
+      },
     };
   },
   computed: {
@@ -54,13 +54,13 @@ export default Vue.extend({
         rotateControl: false,
         fullscreenControl: true,
         disableDefaultUi: false,
-        zoom: 14
+        zoom: 14,
       };
-    }
+    },
   },
   methods: {
     setLocation() {
-      navigator.geolocation.getCurrentPosition(position => {
+      navigator.geolocation.getCurrentPosition((position) => {
         this.mapCenter.lat = position.coords.latitude;
         this.mapCenter.lng = position.coords.longitude;
       });
@@ -71,13 +71,13 @@ export default Vue.extend({
     getLocation(position: any) {
       return {
         lat: position.latitude,
-        lng: position.longitude
+        lng: position.longitude,
       };
-    }
+    },
   },
   async created() {
     this.setLocation();
-  }
+  },
 });
 </script>
 

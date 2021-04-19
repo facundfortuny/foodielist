@@ -77,12 +77,8 @@
         ></v-checkbox>
       </validation-provider>
 
-      <v-btn class="mr-4" type="submit" :disabled="invalid">
-        Save
-      </v-btn>
-      <v-btn @click="cancel">
-        Cancel
-      </v-btn>
+      <v-btn class="mr-4" type="submit" :disabled="invalid"> Save </v-btn>
+      <v-btn @click="cancel"> Cancel </v-btn>
     </form>
   </validation-observer>
 </template>
@@ -94,7 +90,7 @@ import {
   extend,
   ValidationObserver,
   ValidationProvider,
-  setInteractionMode
+  setInteractionMode,
 } from 'vee-validate';
 import firebase from 'firebase/app';
 
@@ -104,30 +100,30 @@ setInteractionMode('eager');
 
 extend('required', {
   ...required,
-  message: '{_field_} can not be empty'
+  message: '{_field_} can not be empty',
 });
 
 extend('max', {
   ...max,
-  message: '{_field_} may not be greater than {length} characters'
+  message: '{_field_} may not be greater than {length} characters',
 });
 
 export default Vue.extend({
   components: {
     ValidationProvider,
     ValidationObserver,
-    FindRestaurant
+    FindRestaurant,
   },
   name: 'AddRestaurant',
   props: ['restaurant'],
   data: () => ({
     locations: ['Barcelona', 'Menorca', 'Valencia', 'London'],
-    form: {}
+    form: {},
   }),
   computed: {
     editMode() {
       return !!this.restaurant.id;
-    }
+    },
   },
   created() {
     this.form = { ...this.restaurant };
@@ -162,8 +158,8 @@ export default Vue.extend({
         rest.position.lat,
         rest.position.lng
       );
-    }
-  }
+    },
+  },
 });
 </script>
 

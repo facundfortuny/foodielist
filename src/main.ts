@@ -10,9 +10,9 @@ Vue.use(GmapVue, {
     key: process.env.VUE_APP_API_MAP_KEY,
     libraries: 'places',
     region: 'ES',
-    language: 'EN'
+    language: 'EN',
   },
-  installComponents: true
+  installComponents: true,
 });
 
 Vue.config.productionTip = false;
@@ -21,5 +21,5 @@ new Vue({
   router,
   store,
   vuetify,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount('#app');
