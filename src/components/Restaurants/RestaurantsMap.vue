@@ -15,8 +15,8 @@
         :shape="shape"
         :icon="
           marker.visited
-            ? 'https://maps.google.com/mapfiles/ms/micons/yellow.png'
-            : 'https://maps.google.com/mapfiles/ms/icons/red.png'
+            ? 'https://maps.google.com/mapfiles/ms/icons/blue.png'
+            : 'https://maps.google.com/mapfiles/ms/icons/yellow.png'
         "
         @click="openInfo(marker, index)"
         @dblclick="openPage(marker)"
