@@ -13,6 +13,11 @@
         :clickable="true"
         :draggable="false"
         :shape="shape"
+        :icon="
+          marker.visited
+            ? 'http://maps.google.com/mapfiles/ms/micons/yellow.png'
+            : 'http://maps.google.com/mapfiles/ms/icons/red.png'
+        "
         @click="openInfo(marker, index)"
         @dblclick="openPage(marker)"
       ></gmap-marker>
