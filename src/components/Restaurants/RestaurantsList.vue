@@ -18,7 +18,7 @@
           ></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-avatar v-if="item.visited">
-          <v-icon class="info" dark> mdi-checkbox-marked-circle </v-icon>
+          <v-icon class="blue" dark>mdi-checkbox-marked-circle </v-icon>
         </v-list-item-avatar>
       </v-list-item>
     </v-list-item-group>

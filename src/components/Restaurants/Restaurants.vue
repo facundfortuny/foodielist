@@ -20,22 +20,19 @@
       </v-form>
       <v-row align="center" justify="center">
         <v-col class="text-center">
-          <v-btn-toggle
-            tile
-            group
-            v-model="menu"
-            mandatory
-            cols="6"
-            md="6"
-            lg="6"
-            xl="6"
-          >
-            <v-btn x-large align-center :value="'map'">
-              <v-icon>mdi-map-marker-outline</v-icon>
-            </v-btn>
-            <v-btn x-large align-center :value="'list'">
-              <v-icon>mdi-format-list-checks</v-icon>
-            </v-btn>
+          <v-btn-toggle tile class="d-block" v-model="menu">
+            <v-row class="text-center">
+              <v-col cols="6">
+                <v-btn icon active-class="primary" dark :value="'map'">
+                  <v-icon>mdi-map-marker-outline</v-icon>
+                </v-btn>
+              </v-col>
+              <v-col cols="6">
+                <v-btn icon active-class="primary" dark :value="'list'">
+                  <v-icon>mdi-format-list-checks</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-btn-toggle>
         </v-col>
       </v-row>
@@ -108,3 +105,16 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss">
+.v-btn {
+  & .v-icon {
+    color: rgba(0, 0, 0, 0.6) !important;
+  }
+}
+.v-btn--active {
+  & .v-icon {
+    color: white !important;
+  }
+}
+</style>
