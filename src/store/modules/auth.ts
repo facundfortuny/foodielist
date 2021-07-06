@@ -2,6 +2,7 @@ import { auth } from '@/db';
 import router from '@/router/index';
 import { Module } from 'vuex';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const AuthModule: Module<any, any> = {
   namespaced: true,
 

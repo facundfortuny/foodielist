@@ -109,12 +109,12 @@ extend('max', {
 });
 
 export default Vue.extend({
+  name: 'AddRestaurant',
   components: {
     ValidationProvider,
     ValidationObserver,
     FindRestaurant,
   },
-  name: 'AddRestaurant',
   props: ['restaurant'],
   data: () => ({
     locations: ['Barcelona', 'Menorca', 'Valencia', 'London'],

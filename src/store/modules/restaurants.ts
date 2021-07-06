@@ -2,6 +2,7 @@ import { Module } from 'vuex';
 import { Restaurant } from '@/models/restaurant';
 import { restaurantsCollection } from '@/db';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const RestaurantsModule: Module<any, any> = {
   namespaced: true,
 

@@ -13,7 +13,7 @@ import Vue from 'vue';
 import Restaurants from '@/components/Restaurants/Restaurants.vue';
 
 export default Vue.extend({
-  components: { Restaurants },
   name: 'Home',
+  components: { Restaurants },
 });
 </script>

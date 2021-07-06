@@ -1,15 +1,15 @@
 <template>
   <gmap-autocomplete
     class="introInput"
-    @place_changed="setRestaurant"
     :value="restaurant"
+    @place_changed="setRestaurant"
   >
-    <template v-slot:input="slotProps">
+    <template #input="slotProps">
       <v-text-field
         ref="input"
         data-vv-name="Place"
-        v-on:listeners="slotProps.listeners"
-        v-on:attrs="slotProps.attrs"
+        @listeners="slotProps.listeners"
+        @attrs="slotProps.attrs"
       >
       </v-text-field>
     </template>

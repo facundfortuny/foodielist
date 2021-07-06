@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row align="center" justify="center" v-if="editMode">
+    <v-row v-if="editMode" align="center" justify="center">
       <v-col cols="12" md="6" lg="6" xl="6">
         <AddRestaurantForm
           :restaurant="selectRest"
@@ -8,7 +8,7 @@
         />
       </v-col>
     </v-row>
-    <v-row align="center" justify="center" v-else>
+    <v-row v-else align="center" justify="center">
       <v-col cols="12" md="6" lg="6" xl="6">
         <RestaurantComponent
           v-if="selectRest.name"
@@ -34,7 +34,12 @@ export default Vue.extend({
     AddRestaurantForm,
     RestaurantComponent,
   },
-  props: ['name'],
+  props: {
+    name: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       editMode: false,
@@ -57,11 +62,11 @@ export default Vue.extend({
           };
     },
   },
+  async created(): Promise<void> {
+    await this.fetchRestaurants();
+  },
   methods: {
     ...mapActions('restaurants', ['fetchRestaurants']),
-  },
-  async created() {
-    await this.fetchRestaurants();
   },
 });
 </script>
