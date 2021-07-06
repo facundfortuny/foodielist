@@ -4,6 +4,8 @@ import vuetify from './plugins/vuetify';
 import router from './router';
 import store from './store';
 import * as GmapVue from 'gmap-vue';
+import firebase from 'firebase/app';
+import 'firebase/analytics';
 
 Vue.use(GmapVue, {
   load: {
@@ -16,6 +18,8 @@ Vue.use(GmapVue, {
 });
 
 Vue.config.productionTip = false;
+
+firebase.analytics();
 
 new Vue({
   router,
