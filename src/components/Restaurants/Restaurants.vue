@@ -23,13 +23,25 @@
           <v-btn-toggle tile class="d-block" v-model="menu">
             <v-row class="text-center">
               <v-col cols="6">
-                <v-btn icon active-class="primary" dark :value="'map'">
-                  <v-icon>mdi-map-marker-outline</v-icon>
+                <v-btn
+                  id="listButton"
+                  icon
+                  active-class="primary"
+                  dark
+                  :value="'list'"
+                >
+                  <v-icon>mdi-format-list-checks</v-icon>
                 </v-btn>
               </v-col>
               <v-col cols="6">
-                <v-btn icon active-class="primary" dark :value="'list'">
-                  <v-icon>mdi-format-list-checks</v-icon>
+                <v-btn
+                  id="mapButton"
+                  icon
+                  active-class="primary"
+                  dark
+                  :value="'map'"
+                >
+                  <v-icon>mdi-map-marker-outline</v-icon>
                 </v-btn>
               </v-col>
             </v-row>
@@ -38,8 +50,8 @@
       </v-row>
     </v-card-text>
     <v-card-text>
-      <RestaurantsList v-if="menu === 'list'" :restaurants="restaurants" />
       <RestaurantsMap v-if="menu === 'map'" :restaurants="restaurants" />
+      <RestaurantsList v-if="menu === 'list'" :restaurants="restaurants" />
     </v-card-text>
   </v-card>
 </template>
@@ -64,7 +76,7 @@ export default Vue.extend({
       selectedLoc: '',
       locations: ['', 'Valencia', 'Barcelona', 'Menorca', 'London'],
       type: '',
-      menu: 'map',
+      menu: 'list',
     };
   },
   computed: {
