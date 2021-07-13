@@ -28,6 +28,7 @@
                   icon
                   active-class="primary"
                   dark
+                  @click="trackEvent('list')"
                   :value="'list'"
                 >
                   <v-icon>mdi-format-list-checks</v-icon>
@@ -39,6 +40,7 @@
                   icon
                   active-class="primary"
                   dark
+                  @click="trackEvent('map')"
                   :value="'map'"
                 >
                   <v-icon>mdi-map-marker-outline</v-icon>
@@ -111,6 +113,13 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions('restaurants', ['fetchRestaurants']),
+    trackEvent: function (event: string) {
+      this.$gtm.trackEvent({
+        event: 'event',
+        category: 'click',
+        action: event,
+      });
+    },
   },
   async created() {
     await this.fetchRestaurants();
