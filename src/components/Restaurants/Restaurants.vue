@@ -20,7 +20,7 @@
       </v-form>
       <v-row align="center" justify="center">
         <v-col class="text-center">
-          <v-btn-toggle tile class="d-block" v-model="menu">
+          <v-btn-toggle id="buttons" tile class="d-block" v-model="menu">
             <v-row class="text-center">
               <v-col cols="6">
                 <v-btn
