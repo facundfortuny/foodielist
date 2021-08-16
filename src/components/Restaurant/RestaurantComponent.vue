@@ -2,6 +2,10 @@
   <v-card class="mx-auto" max-width="500" tile>
     <v-card-title>
       {{ restaurant.name }}
+      <v-spacer></v-spacer>
+      <v-btn icon @click="deleteRestaurant">
+        <v-icon dark> mdi-trash-can </v-icon>
+      </v-btn>
     </v-card-title>
 
     <v-card-text>
@@ -80,6 +84,13 @@ export default Vue.extend({
     },
     edit() {
       this.$emit('editMode');
+    },
+    deleteRestaurant() {
+      this.$store
+        .dispatch('restaurants/deleteRestaurant', this.restaurant)
+        .then(() => {
+          this.$router.push({ name: 'Home' });
+        });
     },
   },
 });

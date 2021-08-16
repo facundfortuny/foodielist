@@ -71,6 +71,9 @@ const RestaurantsModule: Module<any, any> = {
         commit('setRest', restaurants);
       });
     },
+    async deleteRestaurant(state, restaurant) {
+      await restaurantsCollection.doc(restaurant.id).delete();
+    },
   },
   mutations: {
     setRest: (state, restaurants) => {
