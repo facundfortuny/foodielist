@@ -117,7 +117,16 @@ export default Vue.extend({
   },
   props: ['restaurant'],
   data: () => ({
-    locations: ['Barcelona', 'Menorca', 'Valencia', 'London'],
+    locations: [
+      '',
+      'Valencia',
+      'Barcelona',
+      'Menorca',
+      'London',
+      'Madrid',
+      'Muro',
+      'Other',
+    ],
     form: {},
   }),
   computed: {

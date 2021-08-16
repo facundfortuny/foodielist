@@ -74,7 +74,16 @@ export default Vue.extend({
       name: '',
       excludeVisited: false,
       selectedLoc: '',
-      locations: ['', 'Valencia', 'Barcelona', 'Menorca', 'London'],
+      locations: [
+        '',
+        'Valencia',
+        'Barcelona',
+        'Menorca',
+        'London',
+        'Madrid',
+        'Muro',
+        'Other',
+      ],
       type: '',
       menu: 'list',
     };
