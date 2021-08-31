@@ -9,7 +9,7 @@
     </v-card-title>
 
     <v-card-text>
-      <v-avatar color="info" v-if="restaurant.visited">
+      <v-avatar color="blue" v-if="restaurant.visited">
         <v-icon dark> mdi-checkbox-marked-circle </v-icon>
       </v-avatar>
       <div class="my-4 subtitle-1">
