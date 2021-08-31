@@ -13,11 +13,7 @@
         :clickable="true"
         :draggable="false"
         :shape="shape"
-        :icon="
-          marker.visited
-            ? 'https://maps.google.com/mapfiles/ms/icons/blue.png'
-            : 'https://maps.google.com/mapfiles/ms/icons/yellow.png'
-        "
+        :icon="getColoredIconUrl(marker.visited)"
         @click="openInfo(marker, index)"
         @dblclick="openPage(marker)"
       ></gmap-marker>
@@ -37,6 +33,7 @@
 import Vue from 'vue';
 import { GMapOptions } from '@/models/GMapOptions';
 import { Restaurant } from '@/models/restaurant';
+import { getColoredIconUrl } from '@/components/Restaurants/icon-generator';
 import { gmapApi } from 'gmap-vue';
 
 export default Vue.extend({
@@ -55,8 +52,8 @@ export default Vue.extend({
         location: {},
       },
       shape: {
-        coords: [10, 10, 10, 15, 15, 15, 15, 10],
-        type: 'poly',
+        coords: [0, 0, 60],
+        type: 'circle',
       },
       infoContent: '',
       infoPosition: {
@@ -111,7 +108,17 @@ export default Vue.extend({
       }
     },
     getInfoContent(marker: Restaurant) {
-      return `<h3 style="padding: 5px;">${marker.name}</h3>`;
+      return `<h3 style="padding: 5px;">
+      					<a href="${window.location.origin}${
+        this.$router.resolve({
+          name: 'Restaurant',
+          params: { name: marker.name },
+        }).href
+      }" target="_blank" style=" color: ${
+        marker.visited ? '#6991FD' : '#FECD52'
+      }; text-decoration: none">
+						${marker.name}
+					</a></h3>`;
     },
     openPage(marker: Restaurant) {
       this.$router.push({ name: 'Restaurant', params: { name: marker.name } });
@@ -121,6 +128,10 @@ export default Vue.extend({
         lat: position.latitude,
         lng: position.longitude,
       };
+    },
+    getColoredIconUrl(visited: boolean) {
+      const color = visited ? '#6991FD' : '#FECD52';
+      return getColoredIconUrl(color, color);
     },
   },
   watch: {
