@@ -117,28 +117,12 @@ export default Vue.extend({
   },
   props: ['restaurant'],
   data: () => ({
-    locations: [
-      '',
-      'Valencia',
-      'Barcelona',
-      'Menorca',
-      'Alacant',
-      'London',
-      'Madrid',
-      'Paris',
-      'Spain',
-      'Germany',
-      'France',
-      'Italy',
-      'Uk',
-      'Norway',
-      'Sweden',
-      'Denmark',
-      'Other',
-    ],
     form: {},
   }),
   computed: {
+    locations() {
+      return this.$store.state.restaurants.locations;
+    },
     editMode() {
       return !!this.restaurant.id;
     },

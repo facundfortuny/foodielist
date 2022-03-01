@@ -1,6 +1,7 @@
 import { Module } from 'vuex';
 import { Restaurant } from '@/models/restaurant';
 import { restaurantsCollection } from '@/db';
+import { locations } from '@/helpers/locations';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const RestaurantsModule: Module<any, any> = {
@@ -8,6 +9,12 @@ const RestaurantsModule: Module<any, any> = {
 
   state: {
     restaurants: [],
+    locations: locations,
+    selectedlocation: '',
+    selectedName: '',
+    selectedType: '',
+    excludeVisited: false,
+    useLiveLocation: false,
   },
 
   getters: {
@@ -18,6 +25,12 @@ const RestaurantsModule: Module<any, any> = {
       return state.restaurants.filter(
         (restaurant: Restaurant) => restaurant.location === location
       );
+    },
+    getLocations: (state) => (location: string) => {
+      return state.locations.find((loc: string) => loc === location);
+    },
+    getLocationSelected: (state) => () => {
+      return state.selectedlocation;
     },
   },
 
@@ -74,10 +87,40 @@ const RestaurantsModule: Module<any, any> = {
     async deleteRestaurant(state, restaurant) {
       await restaurantsCollection.doc(restaurant.id).delete();
     },
+    selectLocation({ commit }, location) {
+      commit('setLocationSelected', location);
+    },
+    selectName({ commit }, name) {
+      commit('setNameSelected', name);
+    },
+    selectType({ commit }, type) {
+      commit('setTypeSelected', type);
+    },
+    setExcludeVisited({ commit }, excludeVisited) {
+      commit('setExcludeVisited', excludeVisited);
+    },
+    setUseLiveLocation({ commit }, useLiveLocation) {
+      commit('setUseLiveLocation', useLiveLocation);
+    },
   },
   mutations: {
     setRest: (state, restaurants) => {
       state.restaurants = [...restaurants];
+    },
+    setLocationSelected: (state, location) => {
+      state.selectedlocation = location;
+    },
+    setNameSelected: (state, name) => {
+      state.selectedName = name;
+    },
+    setTypeSelected: (state, type) => {
+      state.selectedType = type;
+    },
+    setExcludeVisited: (state, excludeVisited) => {
+      state.excludeVisited = excludeVisited;
+    },
+    setUseLiveLocation: (state, useLiveLocation) => {
+      state.useLiveLocation = useLiveLocation;
     },
   },
 };

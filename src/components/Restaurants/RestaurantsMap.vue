@@ -7,8 +7,8 @@
   >
     <template v-if="restaurants.length > 0">
       <gmap-marker
-        :key="marker.name"
         v-for="(marker, index) in restaurants"
+        :key="marker.name"
         :position="getLocation(marker.position)"
         :clickable="true"
         :draggable="false"
@@ -31,20 +31,31 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { GMapOptions } from '@/models/GMapOptions';
-import { Restaurant } from '@/models/restaurant';
-import { getColoredIconUrl } from '@/components/Restaurants/icon-generator';
 import { gmapApi } from 'gmap-vue';
+import { GMapOptions, Location } from '@/models/GMapOptions';
+import { Restaurant } from '@/models/restaurant';
+import { defaultCoords, locationCoords } from '@/helpers/locations';
+import { getColoredIconUrl } from '@/components/Restaurants/icon-generator';
 
 export default Vue.extend({
   name: 'RestaurantsMap',
-  props: ['restaurants'],
+  props: {
+    restaurants: {
+      type: Array as () => Array<Restaurant>,
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    useLocation: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
-      mapCenter: {
-        lat: 39.47002481761118,
-        lng: -0.37721269017276177,
-      },
+      mapCenter: defaultCoords,
       loading: false,
       description: '',
       marker: {
@@ -56,10 +67,7 @@ export default Vue.extend({
         type: 'circle',
       },
       infoContent: '',
-      infoPosition: {
-        lat: 39.462426,
-        lng: -0.376303,
-      },
+      infoPosition: defaultCoords,
       infoOpen: false,
       currentInfo: -1,
       infoOptions: {
@@ -88,10 +96,14 @@ export default Vue.extend({
   },
   methods: {
     setLocation() {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.mapCenter.lat = position.coords.latitude;
-        this.mapCenter.lng = position.coords.longitude;
-      });
+      if (this.useLocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.mapCenter.lat = position.coords.latitude;
+          this.mapCenter.lng = position.coords.longitude;
+        });
+      } else {
+        this.mapCenter = this.getDefaultMapCenter();
+      }
     },
     openInfo(marker: Restaurant, idx: number) {
       this.infoPosition = {
@@ -123,7 +135,7 @@ export default Vue.extend({
     openPage(marker: Restaurant) {
       this.$router.push({ name: 'Restaurant', params: { name: marker.name } });
     },
-    getLocation(position: { latitude: string; longitude: string }) {
+    getLocation(position: Location) {
       return {
         lat: position.latitude,
         lng: position.longitude,
@@ -132,6 +144,11 @@ export default Vue.extend({
     getColoredIconUrl(visited: boolean) {
       const color = visited ? '#6991FD' : '#FECD52';
       return getColoredIconUrl(color, color);
+    },
+    getDefaultMapCenter() {
+      return locationCoords[this.location]
+        ? locationCoords[this.location]
+        : locationCoords['Default'];
     },
   },
   watch: {
@@ -147,6 +164,13 @@ export default Vue.extend({
         } else {
           this.setLocation();
         }
+      },
+      deep: true,
+      immediate: true,
+    },
+    location: {
+      handler: function () {
+        this.setLocation();
       },
       deep: true,
       immediate: true,

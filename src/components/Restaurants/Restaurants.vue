@@ -5,17 +5,27 @@
       <v-form>
         <v-select
           cols="6"
-          v-model="selectedLoc"
+          v-model="selectedlocation"
           :items="locations"
           label="Location"
           data-vv-name="location"
         ></v-select>
         <v-text-field cols="6" label="Name" v-model="name" />
         <v-text-field cols="6" label="Type" v-model="type" />
-        <v-checkbox
-          v-model="excludeVisited"
-          label="Remove visited"
-        ></v-checkbox>
+        <v-row>
+          <v-col cols="6">
+            <v-checkbox
+              v-model="excludeVisited"
+              label="Remove visited"
+            ></v-checkbox>
+          </v-col>
+          <v-col cols="6">
+            <v-checkbox
+              v-model="useLiveLocation"
+              label="Use live location"
+            ></v-checkbox>
+          </v-col>
+        </v-row>
         <v-divider></v-divider>
       </v-form>
       <v-row align="center" justify="center">
@@ -50,7 +60,12 @@
       </v-row>
     </v-card-text>
     <v-card-text>
-      <RestaurantsMap v-if="menu === 'map'" :restaurants="restaurants" />
+      <RestaurantsMap
+        v-if="menu === 'map'"
+        :restaurants="restaurants"
+        :location="selectedlocation"
+        :useLocation="useLiveLocation"
+      />
       <RestaurantsList v-if="menu === 'list'" :restaurants="restaurants" />
     </v-card-text>
   </v-card>
@@ -71,29 +86,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      name: '',
-      excludeVisited: false,
-      selectedLoc: '',
-      locations: [
-        '',
-        'Valencia',
-        'Barcelona',
-        'Menorca',
-        'Alacant',
-        'London',
-        'Madrid',
-        'Paris',
-        'Spain',
-        'Germany',
-        'France',
-        'Italy',
-        'Uk',
-        'Norway',
-        'Sweden',
-        'Denmark',
-        'Other',
-      ],
-      type: '',
       menu: 'list',
     };
   },
@@ -102,9 +94,9 @@ export default Vue.extend({
       let filterRests = this.$store.state.restaurants.restaurants;
 
       filterRests =
-        this.selectedLoc !== ''
+        this.selectedlocation !== ''
           ? filterRests.filter(
-              (rest: Restaurant) => rest.location === this.selectedLoc
+              (rest: Restaurant) => rest.location === this.selectedlocation
             )
           : filterRests;
 
@@ -125,6 +117,49 @@ export default Vue.extend({
         : filterRests;
 
       return filterRests;
+    },
+    locations(): string[] {
+      return this.$store.state.restaurants.locations;
+    },
+    selectedlocation: {
+      get() {
+        return this.$store.state.restaurants.selectedlocation;
+      },
+      set(location: string) {
+        this.$store.dispatch('restaurants/selectLocation', location);
+      },
+    },
+    name: {
+      get() {
+        return this.$store.state.restaurants.selectedName;
+      },
+      set(name: string) {
+        this.$store.dispatch('restaurants/selectName', name);
+      },
+    },
+    type: {
+      get() {
+        return this.$store.state.restaurants.selectedType;
+      },
+      set(type: string) {
+        this.$store.dispatch('restaurants/selectType', type);
+      },
+    },
+    excludeVisited: {
+      get() {
+        return this.$store.state.restaurants.excludeVisited;
+      },
+      set(excludeVisited: boolean) {
+        this.$store.dispatch('restaurants/setExcludeVisited', excludeVisited);
+      },
+    },
+    useLiveLocation: {
+      get() {
+        return this.$store.state.restaurants.useLiveLocation;
+      },
+      set(useLiveLocation: boolean) {
+        this.$store.dispatch('restaurants/setUseLiveLocation', useLiveLocation);
+      },
     },
   },
   methods: {
